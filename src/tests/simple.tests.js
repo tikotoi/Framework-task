@@ -1,97 +1,94 @@
+import {CloudPage} from "./../po/pages/google.cloud.page/cloud.page.js";
+import {CalculatorPage} from "./../po/pages/google.cloud.page/calculator.page.js";
+import {EmailPage} from "./../po/pages/email.page/emailgenerator.page.js";
+const cloudPage = new CloudPage();
+const calculatorPage = new CalculatorPage();
+const emailPage = new EmailPage();
+
 describe("Test suite 3", async () => {
+
   beforeEach(async () => {
-    await browser.url("https://cloud.google.com/");
+    await cloudPage.open();
   });
 
   it("Google Cloud Pricing Calculator", async () => {
-
     //Search "Google Cloud Platform Pricing Calculator"
-    await $(".YSM5S").click();
-    await $("#i4").setValue("Google Cloud Platform Pricing Calculator");
-    await $(".google-material-icons.PETVs.PETVs-OWXEXe-UbuQg").click();
-    //await $$(".K5hUy")[1].click();
-    await $("//a[@href='https://cloud.google.com/products/calculator-legacy?hl=es-419']").click();
+    await cloudPage.cloudPageSearch.item("searchIcon").click();
+    await cloudPage.cloudPageSearch.item("searchInput").setValue("Google Cloud Platform Pricing Calculator");
+    await cloudPage.cloudPageSearch.item("seachBtn").click();
+    await cloudPage.cloudPageSearch.item("searchResult").waitForDisplayed();
+    await cloudPage.cloudPageSearch.item("searchResult").click();
 
     //Switch to iframe
-    const iframe = await browser.findElements('css selector', 'iframe')
-    await browser.pause(3000);
-    await browser.switchToFrame(iframe[0]);
-    const iframe1 = await browser.findElements('css selector', 'iframe')
-    await browser.switchToFrame(iframe1[0]);
+    await calculatorPage.switchToFrame();
 
-    await $("#input_100").setValue(4);
-    await $('#select_113').click();
-    await $("#select_option_102").waitForDisplayed();
-    await $("#select_option_102").click();
-    await $("#select_117").click();
-    await $("#select_option_115").click();
-    await $("#select_123").click()
-    await $("#select_option_119").click();
-    await $("#select_125").click();
-    await $("#select_option_224").waitForDisplayed();
-    await $("#select_option_224").click();
-    await $("#select_127").click();
-    await $("#select_option_474").waitForDisplayed();
-    await $("#select_option_474").click();
+    //Fill the form
+    await calculatorPage.calculatorEl.elements("numberOfInstances").setValue(4);
+    await calculatorPage.calculatorEl.dropdownIn("softwareIn").click();
+    await calculatorPage.calculatorEl.dropdownOpt("softwareOpt").waitForDisplayed();
+    await calculatorPage.calculatorEl.dropdownOpt("softwareOpt").click();
+    await calculatorPage.calculatorEl.dropdownIn("modelIn").click();
+    await calculatorPage.calculatorEl.dropdownOpt("modelOpt").click();
+    await calculatorPage.calculatorEl.dropdownIn("machineIn").click();
+    await calculatorPage.calculatorEl.dropdownOpt("machineOpt").click();
+    await calculatorPage.calculatorEl.dropdownIn("seriesIn").click();
+    await calculatorPage.calculatorEl.dropdownOpt("seriesOpt").waitForDisplayed();
+    await calculatorPage.calculatorEl.dropdownOpt("seriesOpt").click();
+    await calculatorPage.calculatorEl.dropdownIn("typeIn").click();
+    await calculatorPage.calculatorEl.dropdownOpt("typeOpt").waitForDisplayed();
+    await calculatorPage.calculatorEl.dropdownOpt("typeOpt").click();
 
     // Add GPUs 
-    await $$(".md-container.md-ink-ripple")[2].click();
-    await $("#select_510").click();
-    await $("#select_option_517").waitForDisplayed();
-    await $("#select_option_517").click();
-    await $("#select_512").click();
-    await $("#select_option_520").waitForDisplayed();
-    await $("#select_option_520").click();
-    await $("#select_469").click();
-    await $("#select_option_495").waitForDisplayed();
-    await $("#select_option_495").click();
-    await $("#select_133").click();
-    await $("#select_option_268").waitForDisplayed();
-    await $("#select_option_268").click();
-    await $("#select_140").click();
-    await $("#select_option_138").waitForDisplayed()
-    await $("#select_option_138").click()
-    await $$(".md-raised.md-primary.cpc-button.md-button.md-ink-ripple")[0].waitForDisplayed();
-    await $$(".md-raised.md-primary.cpc-button.md-button.md-ink-ripple")[0].click();
-    await $$(".md-title")[3].waitForDisplayed();
-    const totalCost = await $$(".md-title")[3].getText();
-  
+    await calculatorPage.calculatorEl.addGpuBtn().click();
+    await calculatorPage.calculatorEl.dropdownIn("gputypeIn").click();
+    await calculatorPage.calculatorEl.dropdownOpt("gputypeOpt").waitForDisplayed();
+    await calculatorPage.calculatorEl.dropdownOpt("gputypeOpt").click();
+    await calculatorPage.calculatorEl.dropdownIn("gpuNumberIn").click();
+    await calculatorPage.calculatorEl.dropdownOpt("gpuNumberOpt").waitForDisplayed();
+    await calculatorPage.calculatorEl.dropdownOpt("gpuNumberOpt").click();
+    await calculatorPage.calculatorEl.dropdownIn("localSsdIn").click();
+    await calculatorPage.calculatorEl.dropdownOpt("localSsdOpt").waitForDisplayed();
+    await calculatorPage.calculatorEl.dropdownOpt("localSsdOpt").click();
+    await calculatorPage.calculatorEl.dropdownIn("locationIn").click();
+    await calculatorPage.calculatorEl.dropdownOpt("locationOpt").waitForDisplayed();
+    await calculatorPage.calculatorEl.dropdownOpt("locationOpt").click();
+    await calculatorPage.calculatorEl.dropdownIn("usageIn").click();
+    await calculatorPage.calculatorEl.dropdownOpt("usageOpt").waitForDisplayed();
+    await calculatorPage.calculatorEl.dropdownOpt("usageOpt").click();
+    await calculatorPage.calculatorEl.addToEstimateBtn().waitForDisplayed();
+    await calculatorPage.calculatorEl.addToEstimateBtn().click();
+    await calculatorPage.calculatorEl.getTotalCost().waitForDisplayed();
+    const totalCost = await calculatorPage.calculatorEl.getTotalCost().getText();
     console.log(totalCost);
 
     // Email Estimate
-    await $$(".md-fab.md-primary.md-mini.md-button.md-ink-ripple")[1].waitForDisplayed();
-    await $$(".md-fab.md-primary.md-mini.md-button.md-ink-ripple")[1].click();
+    await calculatorPage.calculatorEl.emailModal().waitForDisplayed();
+    await calculatorPage.calculatorEl.emailModal().click();
 
     //Generate Email
-    await browser.newWindow('https://email-fake.com/');
-    const  copyMail = await $('#email_ch_text').getText();
+    await emailPage.open();
+    const  copyMail = await emailPage.emailPageGenerator.getElement("generatedEmail").getText();
 
-    // Add Email to Calculator window 
-    await browser.switchWindow('cloud.google.com/products/calculator-legacy');
-    const iframe0 = await browser.findElements('css selector', 'iframe')
-    await browser.pause(3000);
-    await browser.switchToFrame(iframe0[0]);
-    const iframe2 = await browser.findElements('css selector', 'iframe')
-    await browser.switchToFrame(iframe2[0]);
-    await $("#input_620").waitForDisplayed();
-    await $("#input_620").click();
-    await $("#input_620").setValue(copyMail);
-    await $$(".md-raised.md-primary.cpc-button.md-button.md-ink-ripple")[4].waitForDisplayed();
-    await $$(".md-raised.md-primary.cpc-button.md-button.md-ink-ripple")[4].click();
+    // Add Email to Calculator page 
+    await calculatorPage.open();
+    await calculatorPage.switchToFrame();
+    await calculatorPage.calculatorEl.elements("emailInput").waitForDisplayed();
+    await calculatorPage.calculatorEl.elements("emailInput").click();
+    await calculatorPage.calculatorEl.elements("emailInput").setValue(copyMail);
+    await calculatorPage.calculatorEl.sendEmail().waitForDisplayed();
+    await calculatorPage.calculatorEl.sendEmail().click();
 
     // Get prices from email
-    await browser.switchWindow("https://email-fake.com")
-    await browser.pause(5000)
-    const total = await $("h2").getText();
-    console.log(total);
+    await emailPage.switchWindow();
+    await browser.pause(5000);
+    const total = await emailPage.emailPageGenerator.getElement("priceFromEmail").getText();
 
     //Compare prices
-    const price = total.slice(24)
-    const resultOfPrice = totalCost.includes(price)
+    const price = total.slice(24);
+    const resultOfPrice = totalCost.includes(price);
     console.log(resultOfPrice);
     
-    //await browser.pause(100);
-    //await browser.switchToFrame(null);
+    await browser.switchToFrame(null);
   });
 
 });
