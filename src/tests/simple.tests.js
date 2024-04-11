@@ -1,4 +1,4 @@
-import {pages, cloudPageActions, calculatorPageActions, emailEstimateActions,setEmailValue,sendEmail } from './../po/pages/index.js';
+import {pages, cloudPageActions, calculatorPageActions, emailEstimateActions,setEmailValue,sentEmail } from './../po/pages/index.js';
 
 describe("Test suite 3", async () => {
 
@@ -15,7 +15,7 @@ describe("Test suite 3", async () => {
     const  copyMail = await pages("emailPage").emailPageGenerator.getElement("generatedEmail").getText();
     await setEmailValue();
     await pages("calculatorPage").calculatorEl.elements("emailInput").setValue(copyMail);
-    await sendEmail();
+    await sentEmail();
     await pages("emailPage").switchWindow();
     await browser.pause(5000);
     const total = await pages("emailPage").emailPageGenerator.getElement("priceFromEmail").getText();

@@ -52,7 +52,7 @@ export const setEmailValue = async () => {
     await pages("calculatorPage").calculatorEl.elements("emailInput").click();
 }
 
-export const sendEmail = async () => {
+export const sentEmail = async () => {
     await pages("calculatorPage").calculatorEl.sendEmail().waitForDisplayed();
     await pages("calculatorPage").calculatorEl.sendEmail().click();
 }
