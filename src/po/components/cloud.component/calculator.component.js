@@ -40,10 +40,10 @@ export class CalculatorComponent {
   }
 
   addGpuBtn() {
-    return $$(".md-container.md-ink-ripple")[2];
+    return $('[ng-model="listingCtrl.computeServer.addGPUs"]');
   }
   addToEstimateBtn() {
-    return $$(".md-raised.md-primary.cpc-button.md-button.md-ink-ripple")[0];
+    return $$(".md-raised.md-primary.cpc-button.md-button.md-ink-ripple")[0]; 
   }
   getTotalCost() {
     return $$(".md-title")[3];

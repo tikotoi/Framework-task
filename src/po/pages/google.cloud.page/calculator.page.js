@@ -5,7 +5,6 @@ export class CalculatorPage {
   }
   async switchToFrame() {
     const iframe = await browser.findElements("css selector", "iframe");
-    await browser.pause(3000);
     await browser.switchToFrame(iframe[0]);
     const iframe1 = await browser.findElements("css selector", "iframe");
     return await browser.switchToFrame(iframe1[0]);

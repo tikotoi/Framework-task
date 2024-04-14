@@ -1,0 +1,18 @@
+{
+  "searchValue": "Google Cloud Platform Pricing Calculator",
+  "searchResult": "Google Cloud Platform Pricing Calculator",
+  "product": "COMPUTE ENGINE",
+  "instances": 4,
+  "label": "leave blank",
+  "software": "Free: Debian, CentOS, CoreOS, Ubuntu or BYOL (Bring Your Own License)",
+  "model": "Regular",
+  "series": "N1",
+  "type": "n1-standard-8 (vCPUs: 8, RAM: 30GB)",
+  "addGPUs": true,
+  "gpuType": "NVIDIA Tesla T4",
+  "gpuNumber": "1",
+  "ssd": "2x375 GB",
+  "location": "Frankfurt (europe-west3)",
+  "usage": "1 Year",
+  "expectedCost": " 1,081.20 "
+}

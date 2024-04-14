@@ -1,28 +1,32 @@
 import {pages, cloudPageActions, calculatorPageActions, emailEstimateActions,setEmailValue,sentEmail } from './../po/pages/index.js';
 
-describe("Test suite 3", async () => {
+describe("Google Cloud Calculator - Smoke Tests", async () => {
+  let totalCost;
 
-  beforeEach(async () => {
+  it("Should Search Google Cloud Pricing Calculator", async () => {
     await pages("cloudPage").open();
-  });
-
-  it("Google Cloud Pricing Calculator", async () => {
+    await expect(browser).toHaveTitle("Cloud Computing Services | Google Cloud");
     await cloudPageActions();
+  });
+  
+  it("Should Fill Calculator Inputs", async () => {
     await calculatorPageActions();
-    const totalCost = await pages("calculatorPage").calculatorEl.getTotalCost().getText();
+    totalCost = await pages("calculatorPage").calculatorEl.getTotalCost().getText();
     await emailEstimateActions();
+  })
+
+  it("Should Generate Email", async () => {
     await pages("emailPage").open();
-    const  copyMail = await pages("emailPage").emailPageGenerator.getElement("generatedEmail").getText();
+    const copyMail = await pages("emailPage").emailPageGenerator.getElement("generatedEmail").getText();
     await setEmailValue();
     await pages("calculatorPage").calculatorEl.elements("emailInput").setValue(copyMail);
     await sentEmail();
     await pages("emailPage").switchWindow();
-    await browser.pause(5000);
     const total = await pages("emailPage").emailPageGenerator.getElement("priceFromEmail").getText();
     //Compare prices
     const price = total.slice(24);
     const resultOfPrice = totalCost.includes(price);
     console.log(resultOfPrice);
     await browser.switchToFrame(null);
-  });
+  })
 });

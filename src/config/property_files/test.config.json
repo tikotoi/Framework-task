@@ -1,0 +1,10 @@
+{
+  "search_url": "https://cloud.google.com/",
+  "calculator_url": "https://cloud.google.com/products/calculator-legacy",
+  "email_generate_url": "https://email-fake.com/",
+  "browser_1": "Chrome",
+  "browser_version_1": "123.0.6312.122",
+  "browser_2": "firefox",
+  "browser_version_2": "124.0.2",
+  "webdriver_url": "http://localhost:8080"
+}
